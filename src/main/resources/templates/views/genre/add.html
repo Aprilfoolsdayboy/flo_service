@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>장르 정보 추가</h1>
+    <form action="/genre/add" method="post">
+        <span>장르 명</span>
+        <input type="text" name="name" th:value="${name}">
+        <th:block th:if="${result != null}">
+            <p th:text="${result.message}" style="color: red;"></p>
+        </th:block> 
+        <button>등록</button>
+        <a href="/genre/list">목록으로</a>
+    </form>
+</body>
+</html>

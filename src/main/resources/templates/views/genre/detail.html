@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>장르 상세정보</h1>
+    <th:block th:if="${genre.status == false}">
+        <p>잘못된 접근입니다.</p>
+    </th:block>
+    <th:block th:if="${genre.status == true}">
+        <form action="/genre/update" method="post">
+            <input type="number" name="no" th:value="${genre.no}" hidden>
+            <input type="text" name="name" th:value="${genre.name}">
+            <button>수정</button>
+            <th:block th:if="${genre.message != null}">
+            <p th:text="${genre.message}" style="color: red; font-weight: bolder;" ></p>
+            </th:block>
+        </form>
+    </th:block>
+        <a th:href="@{/genre/list(page=${page}, keyword=${keyword})}">목록으로</a>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {text-align: center; color: blue;}
+        th {background-color: rgb(8, 209, 42); color: aliceblue; padding: 30px;}
+        td {text-align: center; border-bottom: 3px solid rgb(18, 163, 230); padding: 30px;}
+        table {border-collapse: collapse; width: 1100; margin: 100 auto;}
+    </style>
+</head>
+<body>
+    <h1>장르정보 리스트</h1>
+    <table>
+        <thead>
+            <tr>
+            <th>번호</th>
+            <th>장르명</th>
+            <th>상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="genre : ${result.list}">
+                 <td th:text="${genre.genreSeq}"></td>
+                <td>
+                    <a th:href="@{/genre/detail(genre_no=${genre.genreSeq}, page=${result.currentPage}, keyword=${keyword})}" th:text="${genre.genreName}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/genre/delete(genre_no=${genre.genreSeq})}">삭제</a>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+      <div class="search_area">
+        <form action="/genre/list" method="get" id="search_form">
+            <input type="text" name="keyword" placeholder="장르명" th:value="${keyword}"><button>검색</button>
+        </form>
+    </div>
+    <div class="pager_area">
+        <th:block th:each="i : ${#numbers.sequence(0,result.totalpage -1)}">
+            <th:block th:if="${result.totalpage > 0}">
+            <!-- @{URL(page=${i})} /admin/list/?page=0 -->
+            <!-- @{URL/{page}(page=${i})}  -->
+            <!-- @{/admin/list/{page}(page=${i})} /admin/list/0 /admin/list/1 /admin/list/2 -->
+            <th:block th:if="${keyword == null || keyword == ''}">
+                <a th:href="@{/genre/list(page=${i})}" th:text="${i+1}"></a>
+            </th:block>
+            <th:block th:if="${keyword != null && keyword != ''}">
+                <a th:href="@{/genre/list(page=${i},keyword=${keyword})}" th:text="${i+1}"></a>
+            </th:block>
+            </th:block>
+        </th:block>
+    </div>
+        <a href="/genre/add">장르정보 추가</a>
+</body>
+</html>

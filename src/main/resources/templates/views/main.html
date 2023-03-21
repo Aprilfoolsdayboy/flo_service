@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script th:inline="javascript">
+        const user = [[${session.loginUser}]] // 세션에 있는 데이터를 가져와서 user 변수에 저장
+        if(user == null){ // 이것이 null 이라면, 로그인 안한거
+            alert("관리자 전용 입니다."); // 경고 메시지
+            location.href="/"; // 브라우저의 주소를 /  로 강제 세팅
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav id="gnb">
+            <div id="user_area">
+                <div th:if="${session.loginUser !=null}"> 
+                    <span id="login_user">
+                        <b>
+                            <span th:text="${session.loginUser.admin_name}"></span>
+                            (<a href="/admin/detail" th:text="${session.loginUser.admin_id}"></a>)
+                    </b>
+                    님
+                    <a href="/admin/logout"><button>로그아웃</button></a>
+                    </span>
+                </div>
+            </div>
+            <div id="menu">
+                <th:block th:if="${session.loginUser.admin_grade == 99}">
+                    <a href="/admin/list">관리자 계정 목록</a>
+                    <a href="/ticket/list">이용권 관리</a>
+                </th:block>
+                <a href="/genre/list">장르정보 관리</a>
+                <a href="/album/list">앨범 관리</a>
+                <a href="/music/list">음원 관리</a>
+                <a href="/artist/list">아티스트 관리</a>
+                <a href="/artist/group/list">아티스트 그룹 관리</a>
+                <a href="/ent/list">기획사 정보 관리</a>
+                <a href="/member/list">회원정보 관리</a>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>
